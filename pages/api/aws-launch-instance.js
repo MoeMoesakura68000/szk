@@ -66,7 +66,7 @@ export default function handler(req, res) {
         }
         else {
             imageId = data.Images[0].ImageId
-            keyName = String(Date.now())
+            var keyName = String(Date.now())
             var keyParams = {
                 KeyName: keyName
             };

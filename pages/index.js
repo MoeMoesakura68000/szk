@@ -85,6 +85,8 @@ export default function App() {
   const [modeTipOpen, setModeTipOpen] = useState(false);
 
   //Status States
+  const [isCheckedIp, setIsCheckedIp] = useState(false);
+  const [ipInfomation, setIpInfomation] = useState("");
   const [isLaunchingInstance, setIsLaunchingInstance] = useState(false);
   const [isGettingQuota, setIsGettingQuota] = useState(false);
   const [isCheckingInstances, setIsCheckingInstances] = useState(false);
@@ -793,6 +795,28 @@ export default function App() {
     }
   }
 
+  function checkIp() {
+    if (mode === 1) {
+      fetch('https://api.ipify.org?format=json', {
+        method: 'GET'
+      })
+      .then(async (response) => {
+        var body = await response.json();
+        if (response.ok) {
+          setIsCheckedIp(true);
+          setIpInfomation("您将通过ip: " + body.ip + "进行操作");
+        }
+        else {
+          setIsCheckedIp(true);
+          setIpInfomation("检查ip失败，您的后续操作可能会失败");
+        }
+      });
+    }
+    else if (mode === 2 || mode === 4) {
+      //Do something
+    }
+  }
+
   return (
     <div className="App">
       <div>
@@ -926,6 +950,7 @@ export default function App() {
       )}
       <div>
         <Button variant="text" size="small" onClick={() => {
+          
           //Do something
         }}>检查ip</Button>
       </div>
