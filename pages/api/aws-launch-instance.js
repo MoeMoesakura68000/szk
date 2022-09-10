@@ -18,7 +18,6 @@ export default function handler(req, res) {
     var ec2 = new AWS.EC2();
     var imageName = ''
     var imageOwner = ''
-    var imageId = ''
     if (req.body.system == 'Debian 10') {
         imageName = 'debian-10-amd64-2022*'
         imageOwner = '136693071363'
@@ -65,7 +64,7 @@ export default function handler(req, res) {
             });
         }
         else {
-            imageId = data.Images[0].ImageId
+            var imageId = data.Images[0].ImageId
             var keyName = String(Date.now())
             var keyParams = {
                 KeyName: keyName
@@ -86,7 +85,7 @@ export default function handler(req, res) {
                                 error: err
                             });
                         } else {
-                            groupId = data.GroupId
+                            var groupId = data.GroupId
                             var asgParams = {
                                 GroupId: groupId,
                                 IpPermissions: [
