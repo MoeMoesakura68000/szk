@@ -85,7 +85,6 @@ export default function App() {
   const [modeTipOpen, setModeTipOpen] = useState(false);
 
   //Status States
-  const [isCheckedIp, setIsCheckedIp] = useState(false);
   const [ipInfomation, setIpInfomation] = useState("");
   const [isLaunchingInstance, setIsLaunchingInstance] = useState(false);
   const [isGettingQuota, setIsGettingQuota] = useState(false);
@@ -333,9 +332,9 @@ export default function App() {
       });
     }
     else if (mode === 2 || mode === 4) {
-      var liPostBody
+      var postBody
       if (mode === 2) {
-        liPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: liRegion,
@@ -346,7 +345,7 @@ export default function App() {
         })
       }
       else if (mode === 4) {
-        liPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: liRegion,
@@ -362,7 +361,7 @@ export default function App() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: liPostBody
+        body: postBody
       })
         .then(async (response) => {
           var body = await response.json();
@@ -432,30 +431,30 @@ export default function App() {
       });
     }
     else if (mode === 2 || mode === 4) {
-      var gqPostBody
+      var postBody
       if (mode === 2) {
-        gqPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: gqRegion,
           useProxy: false
-        })
+        });
       }
       else if (mode === 4) {
-        gqPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: gqRegion,
           useProxy: true,
           proxy: proxy
-        })
+        });
       }
       fetch(remote + '/aws-get-quota', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: gqPostBody
+        body: postBody
       })
         .then(async (response) => {
           var body = await response.json();
@@ -534,30 +533,30 @@ export default function App() {
       });
     }
     else if (mode === 2 || mode === 4) {
-      var ciPostBody
+      var postBody
       if (mode === 2) {
-        ciPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: ciRegion,
           useProxy: false
-        })
+        });
       }
       else if (mode === 4) {
-        ciPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: ciRegion,
           useProxy: true,
           proxy: proxy
-        })
+        });
       }
       fetch(remote + '/aws-check-instances', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: ciPostBody
+        body: postBody
       })
         .then(async (response) => {
           var body = await response.json();
@@ -661,32 +660,32 @@ export default function App() {
       });
     }
     else if (mode === 2 || mode === 4) {
-      var ciiPostBody
+      var postBody
       if (mode === 2) {
-        ciiPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: regionOfCheckedInstances,
           instanceId: id,
           useProxy: false
-        })
+        });
       }
       else if (mode === 4) {
-        ciiPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: regionOfCheckedInstances,
           instanceId: id,
           useProxy: true,
           proxy: proxy
-        })
+        });
       }
       fetch(remote + '/aws-change-instance-ip', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: ciiPostBody
+        body: postBody
       })
         .then(async (response) => {
           var body = await response.json();
@@ -753,32 +752,32 @@ export default function App() {
       });
     }
     else if (mode === 2 || mode === 4) {
-      var tiPostBody
+      var postBody
       if (mode === 2) {
-        tiPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: regionOfCheckedInstances,
           instanceId: id,
           useProxy: false
-        })
+        });
       }
       else if (mode === 4) {
-        tiPostBody = JSON.stringify({
+        postBody = JSON.stringify({
           aki: aki,
           saki: saki,
           region: regionOfCheckedInstances,
           instanceId: id,
           useProxy: true,
           proxy: proxy
-        })
+        });
       }
       fetch(remote + '/aws-terminate-instance', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: tiPostBody
+        body: postBody
       })
         .then(async (response) => {
           var body = await response.json();
@@ -795,25 +794,52 @@ export default function App() {
     }
   }
 
-  function checkIp() {
-    if (mode === 1) {
+  function getIp() {
+    if (mode === 1 || mode === 3) {
+      if (mode === 3) {
+        //Use proxy
+        //Need Further Investigation
+      }
       fetch('https://api.ipify.org?format=json', {
         method: 'GET'
       })
-      .then(async (response) => {
-        var body = await response.json();
-        if (response.ok) {
-          setIsCheckedIp(true);
-          setIpInfomation("您将通过ip: " + body.ip + "进行操作");
-        }
-        else {
-          setIsCheckedIp(true);
-          setIpInfomation("检查ip失败，您的后续操作可能会失败");
-        }
-      });
+        .then(async (response) => {
+          var body = await response.json();
+          if (response.ok) {
+            setIpInfomation("此模式下的IP为： " + body.ip);
+          }
+          else {
+            setIpInfomation("无法获取IP信息");
+          }
+        });
     }
     else if (mode === 2 || mode === 4) {
-      //Do something
+      var postBody
+      if (mode === 2) {
+        postBody = JSON.stringify({});
+      }
+      else if (mode === 4) {
+        postBody = JSON.stringify({
+          useProxy: true,
+          proxy: proxy
+        });
+      }
+      fetch(remote + '/get-ip', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: postBody
+      })
+        .then(async (response) => {
+          var body = await response.json();
+          if (response.ok) {
+            setIpInfomation("此模式下的IP为： " + body.ip);
+          }
+          else {
+            setIpInfomation("无法获取IP信息");
+          }
+        });
     }
   }
 
@@ -884,6 +910,7 @@ export default function App() {
             defaultValue={1}
             onChange={e => {
               setMode(parseInt(e.currentTarget.value))
+              setIpInfomation("");
             }}
           >
             <FormControlLabel value={1} control={<Radio />} label="本地" />
@@ -949,10 +976,20 @@ export default function App() {
         <></>
       )}
       <div>
-        <Button variant="text" size="small" onClick={() => {
-          
-          //Do something
-        }}>检查ip</Button>
+        {mode === 1 ? (
+          <Typography sx={{ m: 1 }} variant="subtitle2">在本地模式下，如果您使用了限制IP地址追踪，则检查IP可能不会工作。</Typography>
+        ) : (
+          <></>
+        )
+        }
+        {ipInfomation === "" ? (
+          <Button variant="text" size="small" onClick={() => {
+            getIp()
+          }}>检查IP</Button>
+        ) : (
+          <Typography sx={{ m: 1 }}>{ipInfomation}</Typography>
+        )
+        }
       </div>
       <Collapse in={alertOpen}>
         <Alert severity="success" onClose={() => { setAlertOpen(false) }}>
