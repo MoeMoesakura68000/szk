@@ -850,8 +850,7 @@ export default function App() {
       </div>
       <div>
         <Stack sx={{ m: 2 }} spacing={2} direction="row">
-          <Link underline="hover" variant="body2" href="https://github.com/hiDandelion/shizuku-launcher-web">访问项目前端仓库</Link>
-          <Link underline="hover" variant="body2" href="https://github.com/hiDandelion/shizuku-launcher-backend">访问项目后端仓库</Link>
+          <Link underline="hover" variant="body2" href="https://github.com/hiDandelion/shizuku-launcher-next">访问项目仓库</Link>
         </Stack>
       </div>
       <div>
