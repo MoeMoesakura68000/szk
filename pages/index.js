@@ -844,19 +844,19 @@ export default function App() {
   }
 
   return (
-    <div className="App">
+    <><title>不动的大图书馆の小助手</title><div className="App">
       <div>
         <Typography id="main-title" sx={{ m: 2 }} variant="h4">不动的大图书馆の小助手</Typography>
       </div>
       <div>
-        <Image src="https://jihulab.com/tonyshizukueecadbcadd204749/imgcdn-test-05270000/-/raw/main/assets/img/%E5%B8%95%E7%A7%8B%E8%8E%89_Q%E7%89%88%E7%AB%8B%E7%BB%98_.png" alt="title-shizuku" width={256} height={256} />
+        <Image src="/mq.png" alt="title-patchouli" width={256} height={256} />
       </div>
       <div>
         <FormControl sx={{ m: 1, width: 0.9, maxWidth: 600 }} variant="standard">
           <TextField label="Access Key ID" variant="outlined" size="small" onChange={(e) => {
             setAki(e.target.value);
             setIsCheckedInstances(false);
-          }} />
+          } } />
         </FormControl>
       </div>
       <div>
@@ -864,12 +864,12 @@ export default function App() {
           <TextField label="Secret Access Key ID" variant="outlined" size="small" onChange={(e) => {
             setSaki(e.target.value);
             setIsCheckedInstances(false);
-          }} />
+          } } />
         </FormControl>
       </div>
       <div>
         <Collapse in={modeTipOpen}>
-          <Alert severity="info" onClose={() => { setModeTipOpen(false) }}>
+          <Alert severity="info" onClose={() => { setModeTipOpen(false); } }>
             <AlertTitle>运行模式帮助</AlertTitle>
             <div>本地模式：所有操作均在本地完成，凭证仅发送至AWS，更安全</div>
             <br />
@@ -891,16 +891,16 @@ export default function App() {
             <FormLabel id="mode-radio-buttons-group-label">运行模式</FormLabel>
             <Button variant="text" size="small" startIcon={<HelpOutlineIcon />} onClick={() => {
               setModeTipOpen(true);
-            }}>帮助</Button>
+            } }>帮助</Button>
           </Box>
           <RadioGroup
             row
             aria-labelledby="mode-radio-buttons-group-label"
             defaultValue={1}
             onChange={e => {
-              setMode(parseInt(e.currentTarget.value))
+              setMode(parseInt(e.currentTarget.value));
               setIpInfomation("");
-            }}
+            } }
           >
             <FormControlLabel value={1} control={<Radio />} label="本地" />
             <FormControlLabel value={2} control={<Radio />} label="远端" />
@@ -919,9 +919,9 @@ export default function App() {
               <TextField label="远端地址（可选）" variant="outlined" size="small" onChange={(e) => {
                 setRemote(e.target.value);
                 if (remote === "") {
-                  setRemote(defaultRemote)
+                  setRemote(defaultRemote);
                 }
-              }} />
+              } } />
             </FormControl>
           </div>
         </>
@@ -934,7 +934,7 @@ export default function App() {
             <FormControl sx={{ m: 1, width: 0.9, maxWidth: 600 }}>
               <TextField label="代理地址" variant="outlined" size="small" onChange={(e) => {
                 setProxy(e.target.value);
-              }} />
+              } } />
             </FormControl>
           </div>
         </>
@@ -948,16 +948,16 @@ export default function App() {
               <TextField label="远端地址（可选）" variant="outlined" size="small" onChange={(e) => {
                 setRemote(e.target.value);
                 if (remote === "") {
-                  setRemote(defaultRemote)
+                  setRemote(defaultRemote);
                 }
-              }} />
+              } } />
             </FormControl>
           </div>
           <div>
             <FormControl sx={{ m: 1, width: 0.9, maxWidth: 600 }}>
               <TextField label="代理地址" variant="outlined" size="small" onChange={(e) => {
                 setProxy(e.target.value);
-              }} />
+              } } />
             </FormControl>
           </div>
         </>
@@ -969,26 +969,24 @@ export default function App() {
           <Typography sx={{ m: 1 }} variant="subtitle2">在本地模式下，如果您打开了浏览器中“限制IP地址追踪”，则检查IP可能不会工作。</Typography>
         ) : (
           <></>
-        )
-        }
+        )}
         {ipInfomation === "" ? (
           <Button variant="text" size="small" onClick={() => {
-            getIp()
-          }}>检查IP</Button>
+            getIp();
+          } }>检查IP</Button>
         ) : (
           <Typography sx={{ m: 1 }}>{ipInfomation}</Typography>
-        )
-        }
+        )}
       </div>
       <Collapse in={alertOpen}>
-        <Alert severity="success" onClose={() => { setAlertOpen(false) }}>
+        <Alert severity="success" onClose={() => { setAlertOpen(false); } }>
           <AlertTitle>{alertTitle}</AlertTitle>
           {alertDescription}
         </Alert>
       </Collapse>
       <Dialog
         open={dialogOpen}
-        onClose={() => { setDialogOpen(false); }}
+        onClose={() => { setDialogOpen(false); } }
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -1001,7 +999,7 @@ export default function App() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { setDialogOpen(false); }}>OK</Button>
+          <Button onClick={() => { setDialogOpen(false); } }>OK</Button>
         </DialogActions>
       </Dialog>
       <Divider sx={{ m: 1 }} />
@@ -1011,9 +1009,8 @@ export default function App() {
           <InputLabel id="select-region-label">地区</InputLabel>
           <Select labelId="select-region-label" label="地区" value={liRegion} onChange={e => {
             setLiRegion(e.target.value);
-          }}>
-            {regions.map((r, i) =>
-              <MenuItem key={i} value={r}>{regionsDetail[i]}</MenuItem>
+          } }>
+            {regions.map((r, i) => <MenuItem key={i} value={r}>{regionsDetail[i]}</MenuItem>
             )}
           </Select>
         </FormControl>
@@ -1021,9 +1018,8 @@ export default function App() {
           <InputLabel id="select-region-label">操作系统</InputLabel>
           <Select labelId="select-system-label" label="操作系统" value={system} onChange={e => {
             setSystem(e.target.value);;
-          }}>
-            {systems.map((r, i) =>
-              <MenuItem key={i} value={r}>{r}</MenuItem>
+          } }>
+            {systems.map((r, i) => <MenuItem key={i} value={r}>{r}</MenuItem>
             )}
           </Select>
         </FormControl>
@@ -1031,9 +1027,8 @@ export default function App() {
           <InputLabel id="select-region-label">实例类型</InputLabel>
           <Select labelId="select-type-label" label="实例类型" value={type} onChange={e => {
             setType(e.target.value);
-          }}>
-            {types.map((r, i) =>
-              <MenuItem key={i} value={r}>{r}</MenuItem>
+          } }>
+            {types.map((r, i) => <MenuItem key={i} value={r}>{r}</MenuItem>
             )}
           </Select>
         </FormControl>
@@ -1041,7 +1036,7 @@ export default function App() {
           <FormControl sx={{ m: 1, minWidth: 150 }}>
             <TextField label="密码" type="password" variant="outlined" size="small" onChange={(e) => {
               setPassword(e.target.value);
-            }} />
+            } } />
           </FormControl>
         </div>
       </div>
@@ -1050,7 +1045,7 @@ export default function App() {
           <FormControl>
             <Button sx={{ m: 1 }} variant="contained" size="small" onClick={() => {
               launchInstance();
-            }}>执行</Button>
+            } }>执行</Button>
           </FormControl>
         </div>)}
       <Divider sx={{ m: 1 }} />
@@ -1060,9 +1055,8 @@ export default function App() {
           <InputLabel id="select-region-label">地区</InputLabel>
           <Select labelId="select-region-label" label="地区" value={gqRegion} onChange={e => {
             setGqRegion(e.target.value);
-          }}>
-            {regions.map((r, i) =>
-              <MenuItem key={i} value={r}>{regionsDetail[i]}</MenuItem>
+          } }>
+            {regions.map((r, i) => <MenuItem key={i} value={r}>{regionsDetail[i]}</MenuItem>
             )}
           </Select>
         </FormControl>
@@ -1072,7 +1066,7 @@ export default function App() {
           <FormControl>
             <Button sx={{ m: 1 }} variant="contained" size="small" onClick={() => {
               getQuota();
-            }}>执行</Button>
+            } }>执行</Button>
           </FormControl>
         </div>
       )}
@@ -1083,9 +1077,8 @@ export default function App() {
           <InputLabel id="select-region-label">地区</InputLabel>
           <Select labelId="select-region-label" label="地区" value={ciRegion} onChange={e => {
             setCiRegion(e.target.value);
-          }}>
-            {regions.map((r, i) =>
-              <MenuItem key={i} value={r}>{regionsDetail[i]}</MenuItem>
+          } }>
+            {regions.map((r, i) => <MenuItem key={i} value={r}>{regionsDetail[i]}</MenuItem>
             )}
           </Select>
         </FormControl>
@@ -1095,7 +1088,7 @@ export default function App() {
           <FormControl>
             <Button sx={{ m: 1 }} variant="contained" size="small" onClick={() => {
               checkInstances(false);
-            }}>执行</Button>
+            } }>执行</Button>
           </FormControl>
         </div>
       )}
@@ -1136,6 +1129,6 @@ export default function App() {
           </Table>
         </TableContainer>
       ) : (<></>)}
-    </div>
+    </div></>
   );
 }
