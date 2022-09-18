@@ -221,7 +221,7 @@ export default function App() {
       }
       ec2.describeImages(imageParams, function (err, data) {
         if (err) {
-          showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+          showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
           setIsLaunchingInstance(false);
         }
         else {
@@ -232,7 +232,7 @@ export default function App() {
           };
           ec2.createKeyPair(keyParams, function (err, data) {
             if (err) {
-              showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+              showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
               setIsLaunchingInstance(false);
             } else {
               var sgParams = {
@@ -241,7 +241,7 @@ export default function App() {
               }
               ec2.createSecurityGroup(sgParams, function (err, data) {
                 if (err) {
-                  showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+                  showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
                   setIsLaunchingInstance(false);
                 } else {
                   var groupId = data.GroupId
@@ -296,7 +296,7 @@ export default function App() {
                   };
                   ec2.authorizeSecurityGroupIngress(asgParams, function (err, data) {
                     if (err) {
-                      showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+                      showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
                       setIsLaunchingInstance(false);
                     } else {
                       var userDataRaw = "#!/bin/bash\necho root:" + password + "|sudo chpasswd root\nsudo rm -rf /etc/ssh/sshd_config\nsudo tee /etc/ssh/sshd_config <<EOF\nClientAliveInterval 120\nSubsystem       sftp    /usr/lib/openssh/sftp-server\nX11Forwarding yes\nPrintMotd no\nChallengeResponseAuthentication no\nPasswordAuthentication yes\nPermitRootLogin yes\nUsePAM yes\nAcceptEnv LANG LC_*\nEOF\nsudo systemctl restart sshd\n"
@@ -314,7 +314,7 @@ export default function App() {
                       };
                       ec2.runInstances(instanceParams, function (err, data) {
                         if (err) {
-                          showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+                          showDialog("启动实例失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
                           setIsLaunchingInstance(false);
                         } else {
                           showAlert("启动实例成功", "您的新实例id为" + data.Instances[0].InstanceId + "，请通过查询实例详细信息获得公网ip");
@@ -371,7 +371,7 @@ export default function App() {
             setInstances([]);
           }
           else {
-            showDialog("启动实例失败：" + body.error.name, "错误：" + body.error.message + " 请再试一次或联系支持");
+            showDialog("启动实例失败：" + body.error.name, "错误：" + body.error.message + " 也许号挂了，也许网死了");
             setIsLaunchingInstance(false);
           }
         });
@@ -421,7 +421,7 @@ export default function App() {
       };
       servicequotas.getServiceQuota(params, function (err, data) {
         if (err) {
-          showDialog("查看配额失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+          showDialog("查看配额失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
           setIsGettingQuota(false);
         }
         else {
@@ -463,7 +463,7 @@ export default function App() {
             setIsGettingQuota(false);
           }
           else {
-            showDialog("查看配额失败：" + body.error.name, "错误：" + body.error.message + " 请再试一次或联系支持");
+            showDialog("查看配额失败：" + body.error.name, "错误：" + body.error.message + " 也许号挂了，也许网死了");
             setIsGettingQuota(false);
           }
         });
@@ -512,7 +512,7 @@ export default function App() {
       var params = {}
       ec2.describeInstances(params, function (err, data) {
         if (err) {
-          showDialog("查看实例详细信息失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+          showDialog("查看实例详细信息失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
           setIsCheckingInstances(false);
         }
         else {
@@ -570,7 +570,7 @@ export default function App() {
             setRegionOfCheckedInstances(ciRegion);
           }
           else {
-            showDialog("查看实例详细信息失败：" + body.error.name, "错误：" + body.error.message + " 请再试一次或联系支持");
+            showDialog("查看实例详细信息失败：" + body.error.name, "错误：" + body.error.message + " 也许号挂了，也许网死了");
             setIsCheckingInstances(false);
           }
         });
@@ -614,7 +614,7 @@ export default function App() {
       };
       ec2.allocateAddress(allocateParams, function (err, data) {
         if (err) {
-          showDialog("更换实例ip失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+          showDialog("更换实例ip失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
           setIdOfInstanceChangingIp("");
         }
         else {
@@ -625,7 +625,7 @@ export default function App() {
           };
           ec2.associateAddress(associateParams, function (err, data) {
             if (err) {
-              showDialog("更换实例ip失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+              showDialog("更换实例ip失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
               setIdOfInstanceChangingIp("");
             }
             else {
@@ -634,7 +634,7 @@ export default function App() {
               };
               ec2.disassociateAddress(disassociateParams, function (err, data) {
                 if (err) {
-                  showDialog("更换实例ip失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+                  showDialog("更换实例ip失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
                   setIdOfInstanceChangingIp("");
                 }
                 else {
@@ -643,7 +643,7 @@ export default function App() {
                   };
                   ec2.releaseAddress(releaseParams, function (err, data) {
                     if (err) {
-                      showDialog("更换实例ip失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+                      showDialog("更换实例ip失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
                       setIdOfInstanceChangingIp("");
                     }
                     else {
@@ -695,7 +695,7 @@ export default function App() {
             checkInstances(true);
           }
           else {
-            showDialog("更换实例ip失败：" + body.err.name, "错误：" + body.err.message + " 请再试一次或联系支持");
+            showDialog("更换实例ip失败：" + body.err.name, "错误：" + body.err.message + " 也许号挂了，也许网死了");
             setIdOfInstanceChangingIp("");
           }
         });
@@ -741,7 +741,7 @@ export default function App() {
       };
       ec2.terminateInstances(params, function (err, data) {
         if (err) {
-          showDialog("终止实例失败：" + err.name, "错误：" + err.message + " 请再试一次或联系支持");
+          showDialog("终止实例失败：" + err.name, "错误：" + err.message + " 也许号挂了，也许网死了");
           setIdOfInstanceTerminating("");
         }
         else {
@@ -787,7 +787,7 @@ export default function App() {
             checkInstances(true);
           }
           else {
-            showDialog("终止实例失败：" + body.err.name, "错误：" + body.err.message + "，请再试一次或联系支持");
+            showDialog("终止实例失败：" + body.err.name, "错误：" + body.err.message + "，也许号挂了，也许网死了");
             setIdOfInstanceTerminating("");
           }
         });
@@ -846,21 +846,10 @@ export default function App() {
   return (
     <div className="App">
       <div>
-        <Typography id="main-title" sx={{ m: 2 }} variant="h4">幻想世界の小店のAWS开机小助手</Typography>
+        <Typography id="main-title" sx={{ m: 2 }} variant="h4">不动的大图书馆の小助手</Typography>
       </div>
       <div>
-        <Stack sx={{ m: 2 }} spacing={2} direction="row">
-          <Link underline="hover" variant="body2" href="https://github.com/hiDandelion/shizuku-launcher-next">访问项目仓库</Link>
-        </Stack>
-      </div>
-      <div>
-        <Stack sx={{ m: 2 }} spacing={2} direction="row">
-          <Link color="secondary" underline="hover" variant="body2" href="https://32v.shop/buy/5">购买AWS 8vCPU</Link>
-          <Link color="secondary" underline="hover" variant="body2" href="https://32v.shop/buy/6">购买AWS 32vCPU</Link>
-        </Stack>
-      </div>
-      <div>
-        <Image src="/title-shizuku.webp" alt="title-shizuku" width={256} height={256} />
+        <Image src="https://jihulab.com/tonyshizukueecadbcadd204749/imgcdn-test-05270000/-/raw/main/assets/img/%E5%B8%95%E7%A7%8B%E8%8E%89_Q%E7%89%88%E7%AB%8B%E7%BB%98_.png" alt="title-shizuku" width={256} height={256} />
       </div>
       <div>
         <FormControl sx={{ m: 1, width: 0.9, maxWidth: 600 }} variant="standard">
@@ -891,6 +880,7 @@ export default function App() {
             <div>远端+代理模式：操作在远端完成，请求通过代理服务器转发至AWS，匿名性最高</div>
             <div>您需要提供兼容的代理服务器地址，受支持的协议为：http/https/socks(v5)/socks5/socks4/pac</div>
             <div>正确的格式范例：https://username:password@your-proxy.com:port</div>
+            <div>附注：此版为去广告版</div>
             <br />
           </Alert>
         </Collapse>
@@ -918,7 +908,7 @@ export default function App() {
               //Uncomment this when proxy-agent is ready to use
               //<FormControlLabel value={3} control={<Radio />} label="本地+代理（高级用户）" />
             }
-            <FormControlLabel value={4} control={<Radio />} label="远端+代理" />
+            <FormControlLabel value={4} control={<Radio />} label="远端代理" />
           </RadioGroup>
         </FormControl>
       </div>
@@ -976,7 +966,7 @@ export default function App() {
       )}
       <div>
         {mode === 1 ? (
-          <Typography sx={{ m: 1 }} variant="subtitle2">在本地模式下，如果您使用了限制IP地址追踪，则检查IP可能不会工作。</Typography>
+          <Typography sx={{ m: 1 }} variant="subtitle2">在本地模式下，如果您打开了浏览器中“限制IP地址追踪”，则检查IP可能不会工作。</Typography>
         ) : (
           <></>
         )
